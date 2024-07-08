@@ -8,7 +8,7 @@ class Spritesheet:
         # Empty image with width and height
         image = pygame.Surface((width, height), pygame.SRCALPHA).convert_alpha()
         # Split given image to a specific frame
-        image.blit(self.sheet, (0, 0), ((frame * width), (row * height), width, height))
+        image.blit(self.sheet, (0, 0), ((frame*width), (row*height), width, height))
         # Scale image
-        image = pygame.transform.scale(image, (width * scale, height * scale))
+        image = pygame.transform.scale(image, (width*scale, height*scale))
         return image

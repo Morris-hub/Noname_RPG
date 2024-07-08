@@ -1,14 +1,18 @@
 import pygame
 import sys
 import Spritesheet
-#General Setup
 
 pygame.init()
+
 TITEL = "Empty Title"
 FPS = 30
+SCREEN_SIZE = [1200, 800]
+BACKGROUND_COLOR_BLACK = (0,0,0)
+BACKGROUND_COLOR_GREY = (100,100,100)
 
+#Screen Settings
 pygame.display.set_caption(TITEL)
-screen = pygame.display.set_mode([1200, 800])
+screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 
 
@@ -23,9 +27,8 @@ player_sprite = "sprites/noah.png"
 sprite_sheet_image = pygame.image.load(player_sprite).convert_alpha()
 spritesheet = Spritesheet.Spritesheet(sprite_sheet_image)   #Spritesheet
 
-BLACK = (0,0,0)
 
-#create animation list
+#Create Animationlist
 action = 0
 animation_list = []
 last_update = pygame.time.get_ticks()
@@ -36,27 +39,25 @@ animation = 4
 
 
 
-#split array into animations
+#Split array into animations
 for row in range(animation):
     temp_list_img = []
     for column in range(animation_steps):
         temp_list_img.append(spritesheet.get_image(column, row, 16, 20, 2))# frame,column, row,width, height, scale, size
     animation_list.append(temp_list_img)
 
-
-
-
+#Player Settings
 velocity = 0.25
-go = True
 pos_y= 400
 pos_x= 600
+go = True
 
 #Gameloop
 while go:
     fps = clock.tick(FPS)
 
     #update background
-    screen.fill((50, 50, 50))
+    screen.fill(BACKGROUND_COLOR_BLACK)
 
     #update animation
     current_time = pygame.time.get_ticks()
