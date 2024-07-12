@@ -35,6 +35,10 @@ player_sprite = "sprites/noah.png"
 sprite_sheet_image = pygame.image.load(player_sprite).convert_alpha()
 spritesheet = Spritesheet(sprite_sheet_image)  # Spritesheet
 
+
+enemy_sprite = "sprites/enemy.png"
+sprite_sheet_image = pygame.image.load(enemy_sprite).convert_alpha()
+enemy_spritesheet = Spritesheet(sprite_sheet_image)  # Spritesheet
 # Create Animationlist
 action = 0
 animation_list = []
@@ -74,7 +78,7 @@ def draw_text_window(screen, lines, x, y, width, height):
         screen.blit(text_surface, (x + 10, text_y))
         text_y += text_surface.get_height() + line_spacing
 
-enemy = Enemy(spritesheet, SCREEN_SIZE)
+enemy = Enemy(enemy_spritesheet, SCREEN_SIZE)
 
 # Gameloop
 while go:
@@ -126,12 +130,10 @@ while go:
     else:
         frame = 0
 
-
-
     player_rect.topleft = (pos_x, pos_y)
 
     # Draw based on y position to determine layer
-    if pos_y <= enemy.rect.centery:
+    if player_rect.top <= enemy.rect.top:
         screen.blit(animation_list[action][frame], player_rect.topleft)  # Player
         enemy.draw(screen)  # Enemy
     else:

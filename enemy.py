@@ -11,6 +11,7 @@ class Enemy:
         self.update_time = pygame.time.get_ticks()
         self.direction = self.get_random_direction()
         self.speed = 5
+        self.step_counter = 0
         self.image = self.get_current_frame()
         self.rect = self.image.get_rect()
         self.rect.center = (self.screen_size[0] // 2, self.screen_size[1] // 2)
@@ -58,15 +59,23 @@ class Enemy:
         self.rect.x += self.direction.x * self.speed
         self.rect.y += self.direction.y * self.speed
 
-        # Check if the enemy hits the screen border and reverse direction
-        if self.rect.left <= 0 or self.rect.right >= self.screen_size[0]:
+        # Increment step counter
+        self.step_counter += 1
+
+        # Change direction every 15 steps
+        if self.step_counter >= 15:
             self.direction = self.get_random_direction()
-            while self.direction.x == 0:  # Ensure new direction is horizontal
-                self.direction = self.get_random_direction()
-        if self.rect.top <= 0 or self.rect.bottom >= self.screen_size[1]:
-            self.direction = self.get_random_direction()
-            while self.direction.y == 0:  # Ensure new direction is vertical
-                self.direction = self.get_random_direction()
+            self.step_counter = 0
+
+        # Ensure enemy stays within screen bounds
+        if self.rect.left <= 0:
+            self.rect.left = 0
+        if self.rect.right >= self.screen_size[0]:
+            self.rect.right = self.screen_size[0]
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= self.screen_size[1]:
+            self.rect.bottom = self.screen_size[1]
 
         self.image = self.get_current_frame()
 
